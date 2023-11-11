@@ -1,20 +1,13 @@
+import { Link } from "react-router-dom";
 
 
 
 const Navbar = () => {
 
     const navLinks = <>
+        <li><Link to='/menu'>Our Menu</Link></li>
         <li><a>Item 1</a></li>
-        <li tabIndex={0}>
-            <details>
-                <summary>Parent</summary>
-                <ul className="p-2">
-                    <li><a>Submenu 1</a></li>
-                    <li><a>Submenu 2</a></li>
-                </ul>
-            </details>
-        </li>
-        <li><a>Item 3</a></li>
+
     </>
 
     return (
@@ -28,12 +21,14 @@ const Navbar = () => {
                         {navLinks}
                     </ul>
                 </div>
-                <div className="">
-                    <h1 className=" font-extrabold">
-                        BISTRO BOSS
-                    </h1>
-                    <p className="uppercase flex gap-1 font-bold">Restaurant</p>
-                </div>
+                <Link to='/'>
+                    <div className="">
+                        <h1 className=" font-extrabold">
+                            BISTRO BOSS
+                        </h1>
+                        <p className="uppercase flex gap-1 font-bold">Restaurant</p>
+                    </div>
+                </Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">

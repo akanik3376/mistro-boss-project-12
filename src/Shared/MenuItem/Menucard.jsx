@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 
+
 const MenuCard = ({ menu }) => {
 
     const { price, image, recipe, name } = menu || {}

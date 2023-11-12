@@ -9,6 +9,7 @@ import pizzaImg from "../../assets/menu/pizza-bg.jpg"
 import saladImg from "../../assets/menu/salad-bg.jpg"
 import soupImg from "../../assets/menu/soup-bg.jpg"
 
+
 import SectionTitle from '../../Components/SectionTitle/SectionTitle';
 import MenuCategory from './MenuCategory/MenuCategory';
 
@@ -25,6 +26,7 @@ const Menu = () => {
     const soup = menus?.filter(item => item.category === 'soup')
     // console.log(soup)
     const offered = menus?.filter(item => item.category === 'offered')
+    const drinks = menus?.filter(item => item.category === 'drinks')
 
 
 
@@ -49,7 +51,7 @@ const Menu = () => {
 
             {/* DESSERTS section */}
             <MenuCategory items={dessert}
-                title={"DESSERTS"}
+                title={"dessert"}
                 details={'Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'}
                 coverImg={dessertImg}
 
@@ -59,7 +61,7 @@ const Menu = () => {
             {/* PIZZA section */}
             <div className='my-7'>
                 <MenuCategory items={pizza}
-                    title={"PIZZA"}
+                    title={"pizza"}
                     details={'Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'}
                     coverImg={pizzaImg}
 
@@ -70,7 +72,7 @@ const Menu = () => {
             {/* salad section */}
             <div className='my-7'>
                 <MenuCategory items={salad}
-                    title={"SALADS"}
+                    title={"salad"}
                     details={'Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'}
                     coverImg={saladImg}
 
@@ -79,24 +81,26 @@ const Menu = () => {
 
             {/* PIZZA section */}
             <div className='my-7'>
-                <MenuCategory items={salad}
-                    title={"SALADS"}
+                <MenuCategory items={offered}
+                    title={"offered"}
                     details={'Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'}
-                    coverImg={saladImg}
+                    coverImg={''}
 
                 ></MenuCategory>
             </div>
 
 
-            {/* PIZZA section */}
+            {/* Soup section */}
             <div className='my-7'>
                 <MenuCategory items={soup}
-                    title={"SOUPS"}
+                    title={"soup"}
                     details={'Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'}
                     coverImg={soupImg}
 
                 ></MenuCategory>
             </div>
+
+
         </div>
     );
 };

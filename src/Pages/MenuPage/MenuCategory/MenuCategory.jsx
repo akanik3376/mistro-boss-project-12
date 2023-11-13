@@ -4,7 +4,7 @@ import Cover from "../../../Shared/Cover/Cover";
 import MenuCard from "../../../Shared/MenuItem/Menucard";
 
 const MenuCategory = ({ items, title, details, coverImg, }) => {
-    console.log(title)
+    // console.log(title)
     return (
         <div >
             {

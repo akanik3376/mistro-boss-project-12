@@ -26,7 +26,7 @@ const Menu = () => {
     const soup = menus?.filter(item => item.category === 'soup')
     // console.log(soup)
     const offered = menus?.filter(item => item.category === 'offered')
-    const drinks = menus?.filter(item => item.category === 'drinks')
+    // const drinks = menus?.filter(item => item.category === 'drinks')
 
 
 

@@ -7,6 +7,9 @@ import Error from "../Pages/ErrorPage/Error";
 import Home from "../Pages/HompPage/Home";
 import Menu from "../Pages/MenuPage/Menu";
 import Order from "../Pages/Order/Order/Order";
+import Login from "../Pages/LoginPage/Login";
+import Register from "../Pages/RegisterPage/Register";
+import PrivetRoot from "./PrivetRoot";
 
 
 export const router = createBrowserRouter([
@@ -25,7 +28,15 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/order/:category',
-                element: <Order></Order>,
+                element: <PrivetRoot><Order></Order></PrivetRoot>,
+            },
+            {
+                path: '/login',
+                element: <Login></Login>,
+            },
+            {
+                path: '/register',
+                element: <Register></Register>,
             },
         ]
     },

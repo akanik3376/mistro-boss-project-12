@@ -7,29 +7,49 @@ import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import useAuth from "../../Hooks/useAuth";
 import swal from "sweetalert";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 // navigate(path, { replace: true })
 const Register = () => {
     const location = useLocation()
     const navigate = useNavigate()
+    const axiosPublic = useAxiosPublic()
 
     const path = location.state?.form?.pathname || "/"
-    const { createUser } = useAuth()
+    const { createUser, updateProfileUser } = useAuth()
 
     // react hook form
-    const {
-        register,
-        handleSubmit,
-
-        formState: { errors },
-    } = useForm()
+    const { register, handleSubmit, reset, formState: { errors }, } = useForm()
 
     const onSubmit = (data) => {
+
         createUser(data.email, data.password)
             .then(res => {
                 console.log(res)
-                swal("User create success fully")
-                navigate(path, { replace: true })
+                updateProfileUser(data.name, data.photoUrl)
+                    .then(() => {
+                        // create user entry in data base
+                        const userInfo = { name: data.name, email: data.email }
+                        console.log(userInfo)
+
+                        axiosPublic.post('/users', userInfo)
+                            .then(res => {
+                                console.log(res.data.insertedId)
+                                if (res.data.insertedId)
+                                    reset()
+
+                                swal("User create success fully")
+
+                                navigate(path, { replace: true })
+                            })
+                            .catch(err => console.log(err))
+
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    });
+
+
             })
             .catch(err => {
                 console.log(err)
@@ -58,6 +78,15 @@ const Register = () => {
                                 </label>
                                 <input type="name" {...register("name", { required: true })} name="name" placeholder="Your name" className="input input-bordered" required />
                                 {errors.name && <span className="text-red-700">Name is required</span>}
+                            </div>
+
+                            {/* photo url input */}
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Name</span>
+                                </label>
+                                <input type="name" {...register("photoUrl", { required: true })} placeholder="photo url" className="input input-bordered" required />
+                                {errors.photoUrl && <span className="text-red-700">photoUrl is required</span>}
                             </div>
 
                             {/* email input */}

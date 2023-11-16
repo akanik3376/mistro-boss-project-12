@@ -10,6 +10,9 @@ import Order from "../Pages/Order/Order/Order";
 import Login from "../Pages/LoginPage/Login";
 import Register from "../Pages/RegisterPage/Register";
 import PrivetRoot from "./PrivetRoot";
+import Dashboard from "../MainLayout/Dashboard";
+import Cart from "../Pages/DashboardPages/Cart/Cart";
+import AllUsers from "../Pages/DashboardPages/AllUsers/AllUsers";
 
 
 export const router = createBrowserRouter([
@@ -40,4 +43,19 @@ export const router = createBrowserRouter([
             },
         ]
     },
+    {
+        path: '/dashboard',
+        element: <PrivetRoot><Dashboard></Dashboard></PrivetRoot>,
+        errorElement: <Error></Error>,
+        children: [
+            {
+                path: 'cart',
+                element: <Cart></Cart>
+            },
+            {
+                path: 'users',
+                element: <AllUsers></AllUsers>
+            },
+        ]
+    }
 ]);

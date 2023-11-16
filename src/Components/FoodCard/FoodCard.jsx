@@ -4,19 +4,22 @@ import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import useCart from "../../Hooks/useCart";
 
 const FoodCard = ({ item }) => {
     const { price, image, recipe, name, _id } = item || {}
+    const [refetch] = useCart()
+    // console.log(refetch)
+
     const { user } = useAuth()
     const location = useLocation()
     const navigate = useNavigate()
     const axiosSecure = useAxiosSecure()
-
     const path = location.state?.form?.pathname || "/"
 
     // card item data send server side
-    const HandelAddToCart = (food) => {
-        console.log(food)
+    const HandelAddToCart = () => {
+        // send data to backhand
         if (user && user.email) {
             const cartItem = {
                 menuId: _id,
@@ -28,13 +31,12 @@ const FoodCard = ({ item }) => {
             }
             axiosSecure.post('/carts', cartItem)
                 .then(res => {
-                    console.log(res?.data)
+                    // console.log(res?.data)
                     if (res?.data.insertedId) {
-                        Swal.fire('Add to cart Done!')
+                        Swal.fire(`${name} add to cart Done!`)
+                        refetch()
                     }
                 })
-
-            // 
         }
         else (
             Swal.fire({
@@ -67,7 +69,7 @@ const FoodCard = ({ item }) => {
                 <h2 className="card-title">{name}</h2>
                 <p>{recipe}</p>
                 <div className="card-actions">
-                    <button onClick={() => HandelAddToCart(item)}
+                    <button onClick={HandelAddToCart}
                         className="btn btn-outline bg-[#111827] border-0 border-b-4 border-[#BB8506] text-[#BB8506] hover:text-[#BB8506]">add to cart</button>
                 </div>
             </div>

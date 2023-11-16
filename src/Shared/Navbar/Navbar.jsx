@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import { BsFillCartFill } from 'react-icons/bs';
-
+import useCart from "../../Hooks/useCart";
 
 const Navbar = () => {
 
     const { user, logoutUser } = useAuth()
+    const [cart] = useCart()
+    // console.log(cart)
 
     const HandelLogout = () => {
         logoutUser()
@@ -25,9 +27,10 @@ const Navbar = () => {
         {
             user ? <>
                 <li><button onClick={HandelLogout} className="btn btn-sm btn-ghost">Logout</button></li>
-                <li><Link to="/">
+
+                <li><Link to="/dashboard/cart">
                     <button >
-                        <div className="badge badge-secondary"><BsFillCartFill></BsFillCartFill>+0</div>
+                        <div className="badge badge-secondary"><BsFillCartFill></BsFillCartFill>+{cart?.length}</div>
                     </button>
                 </Link></li>
 

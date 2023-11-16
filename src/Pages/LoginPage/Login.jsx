@@ -8,16 +8,17 @@ import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-s
 import { useEffect, useState } from "react";
 import swal from "sweetalert";
 import useAuth from "../../Hooks/useAuth";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const Login = () => {
 
-
+    const axiosPublic = useAxiosPublic()
     const [disabled, SetDisabled] = useState(true)
     const { googleLogin, loginUser } = useAuth()
     const location = useLocation()
     const navigate = useNavigate()
 
-    const form = location.state?.form?.pathname || "/"
+    // const form = location.state?.form?.pathname || "/"
 
 
     useEffect(() => {
@@ -46,7 +47,21 @@ const Login = () => {
     //google login
     const HandelGoogleLogin = () => {
         googleLogin()
-        navigate('/', { state: { form: location } })
+            .then(result => {
+                const userInfo = {
+                    email: result?.user?.email,
+                    name: result?.user?.displayName
+                }
+                axiosPublic.post('/users', userInfo)
+                    .then(res => {
+                        console.log(res)
+                        navigate('/', { state: { form: location } })
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+            })
+
     }
 
     // login with email & password
@@ -129,7 +144,7 @@ const Login = () => {
 
 
                             <div className="form-control mt-6">
-                                <input type="submit" disabled={false} value="Login"
+                                <input type="submit" disabled={disabled} value="Login"
                                     className="btn bg-[#D1A054] text-white font-bold" />
 
                             </div>

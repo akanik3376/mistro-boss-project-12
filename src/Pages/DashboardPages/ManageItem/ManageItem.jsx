@@ -3,23 +3,16 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import useMenu from "../../../Hooks/useMenu";
 import { FaUpload, } from "react-icons/fa";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import swal from "sweetalert";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const ManageItem = () => {
 
-    const [menus] = useMenu()
-    const axiosSecure = useAxiosSecure()
-
-    //update item
-    const HandelUpdateItem = id => {
-        console.log(id)
-    }
-
+    const [menu, refetch] = useMenu();
+    const axiosSecure = useAxiosSecure();
 
     // delete item
-    const HandelDeleteItem = id => {
-
+    const handleDeleteItem = (id) => {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -31,14 +24,20 @@ const ManageItem = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 axiosSecure.delete(`/menu/${id}`)
-                    .then(res => {
+                    .then((res) => {
                         if (res.data?.deletedCount > 0) {
-                            swal(`Item delete success fully`)
+                            refetch();
+                            Swal.fire('Item deleted successfully');
                         }
                     })
+                    .catch((error) => {
+                        console.error('Error deleting item:', error);
+                        Swal.fire('Error deleting item', '', 'error');
+                    });
             }
-        })
-    }
+        });
+    };
+
 
 
 
@@ -50,7 +49,7 @@ const ManageItem = () => {
             ></SectionTitle>
 
             <div>
-                <h1 className="text-4xl">Total items: 6</h1>
+                <h1 className="text-4xl">Total items: {menu.length}</h1>
                 <div className="overflow-x-auto mt-4">
                     <table className="table w-full">
                         <thead className="bg-yellow-500 text-white">
@@ -67,35 +66,36 @@ const ManageItem = () => {
                             </tr>
                         </thead>
                         {
-                            menus?.map((menu, index) => <tbody key={menu._id}>
+                            menu?.map((item, index) => <tbody key={item._id}>
                                 {/* row 1 */}
                                 <tr>
                                     <td>{index + 1}</td>
                                     <td>
                                         <div className="avatar">
                                             <div className=" w-12 h-12">
-                                                <img src={menu.image} alt="Avatar Tailwind CSS Component" />
+                                                <img src={item.image} alt="Avatar Tailwind CSS Component" />
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        {menu?.name}
+                                        {item?.name}
                                     </td>
                                     <td>
-                                        {menu?.price}
+                                        {item?.price}
 
                                     </td>
-
+                                    {/* update data */}
                                     <td>
-
-
-                                        <button onClick={() => HandelUpdateItem(menu._id)}
-                                            className="btn bg-yellow-500"><FaUpload></FaUpload></button>
+                                        <Link to={`/dashboard/update/${item._id}`}>
+                                            <button
+                                                className="btn bg-yellow-500"><FaUpload></FaUpload>
+                                            </button>
+                                        </Link>
 
                                     </td>
-
+                                    {/* delete data */}
                                     <th>
-                                        <button onClick={() => HandelDeleteItem(menu._id)}
+                                        <button onClick={() => handleDeleteItem(item._id)}
                                             className="btn text-red-600 font-3xl"><RiDeleteBin6Line></RiDeleteBin6Line></button>
                                     </th>
                                 </tr>

@@ -54,8 +54,10 @@ const Login = () => {
                 }
                 axiosPublic.post('/users', userInfo)
                     .then(res => {
-                        console.log(res)
-                        navigate('/', { state: { form: location } })
+                        if (res) {
+                            navigate('/', { state: { form: location } })
+                        }
+
                     })
                     .catch(err => {
                         console.log(err)

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
 import useCart from "../../../Hooks/useCart";
 import CartTable from "./CartTable";
@@ -18,7 +19,12 @@ const Cart = () => {
                         <div className="flex justify-between items-center">
                             <h1 className="text-3xl">Total Product: {cart?.length}</h1>
                             <h1 className="text-3xl">Total Price: ${totalPrice ? totalPrice : '00'}</h1>
-                            <button className="btn font-bold bg-yellow-500">Pay</button>
+                            {
+                                cart?.length ? <Link to='/dashboard/pay'>
+                                    <button className="btn font-bold bg-yellow-500">Pay</button>
+                                </Link>
+                                    : <button disabled className="btn font-bold bg-yellow-500">Pay</button>
+                            }
                         </div>
                 }
             </div>

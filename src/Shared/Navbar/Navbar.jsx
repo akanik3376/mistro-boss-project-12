@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import { BsFillCartFill } from 'react-icons/bs';
 import useCart from "../../Hooks/useCart";
+import useAdmin from "../../Hooks/useAdmin";
 
 const Navbar = () => {
 
     const { user, logoutUser } = useAuth()
+    const [isAdmin] = useAdmin()
     const [cart] = useCart()
     // console.log(cart)
 
@@ -25,8 +27,14 @@ const Navbar = () => {
         <li><Link to='/menu'>Our Menu</Link></li>
         <li><Link to="/order/salad">Order Food</Link></li>
         {
-            user ? <>
-                <li><button onClick={HandelLogout} className="btn btn-sm btn-ghost">Logout</button></li>
+            user && isAdmin && <li><Link to="/dashboard/admin-home">Dashboard</Link></li>
+        }
+        {
+            user && !isAdmin && <li><Link to="/dashboard/user-home">Dashboard</Link></li>
+        }
+        {
+            user && !isAdmin && <>
+
 
                 <li><Link to="/dashboard/cart">
                     <button >
@@ -34,8 +42,6 @@ const Navbar = () => {
                     </button>
                 </Link></li>
 
-            </> : <>
-                <li><Link className="btn btn-sm btn-ghost" to="/login">Login</Link></li>
             </>
         }
 
@@ -76,7 +82,12 @@ const Navbar = () => {
 
             </div>
             <div className="navbar-end">
-                <a className="btn">Button</a>
+                {user ? <li>
+                    <button onClick={HandelLogout} className="btn btn-sm btn-ghost">Logout</button>
+                </li>
+                    : <li>
+                        <Link className="btn btn-sm btn-ghost" to="/login">Login</Link>
+                    </li>}
             </div>
         </div>
     );

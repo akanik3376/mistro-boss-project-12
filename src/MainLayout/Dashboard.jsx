@@ -1,14 +1,15 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { FaShoppingCart, FaHome, FaWallet, FaRegAddressBook, FaLock, FaAddressBook } from "react-icons/fa";
+import { FaShoppingCart, FaHome, FaWallet, FaRegAddressBook, FaLock, FaAddressBook, FaFileContract } from "react-icons/fa";
 import { MdContactMail } from "react-icons/md";
 import { IoMdMenu } from "react-icons/io";
 import useAdmin from "../Hooks/useAdmin";
+import useCart from "../Hooks/useCart";
 
 
 const Dashboard = () => {
     //TO DO:
     const [isAdmin] = useAdmin()
-
+    const [cart] = useCart()
 
     return (
         <div className="flex gap-12 ">
@@ -19,7 +20,7 @@ const Dashboard = () => {
                         isAdmin ? <>
 
                             <li>
-                                <NavLink to='/'><FaHome />Admin Home</NavLink>
+                                <NavLink to='/dashboard/admin-home'><FaHome />Admin Home</NavLink>
                             </li>
                             <li>
                                 <NavLink to='/dashboard/addItems'><FaAddressBook />Add items</NavLink>
@@ -29,7 +30,7 @@ const Dashboard = () => {
                             </li>
 
                             <li>
-                                <NavLink to='/dashboard/cart'><FaRegAddressBook />Manage Booking</NavLink>
+                                <NavLink to='/dashboard/manage-bookings'><FaRegAddressBook />Manage Booking</NavLink>
                             </li>
 
                             <li>
@@ -43,22 +44,44 @@ const Dashboard = () => {
                                 {/* main menu clint side */}
 
                                 <li>
-                                    <NavLink to='/'><FaHome />Home</NavLink>
+                                    <NavLink to='/user-home'><FaHome />User Home</NavLink>
+                                </li>
+
+                                <li>
+                                    <NavLink to='/user-reservation'><IoMdMenu />reservation</NavLink>
+                                </li>
+
+                                <li>
+                                    <NavLink to='/dashboard/payment-history'><FaLock />payment history</NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to='/menu'><IoMdMenu />Our Menu</NavLink>
+                                    <NavLink to='/dashboard/cart'><IoMdMenu />My cart {cart?.length}</NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to='/menu'><FaLock />Shop</NavLink>
+                                    <NavLink to='/user-add-review'><FaLock />add review</NavLink>
                                 </li>
+
                                 <li>
-                                    <NavLink to='/menu'><MdContactMail />Contact</NavLink>
+                                    <NavLink to='/user-booking'><MdContactMail />my booking</NavLink>
                                 </li>
 
                             </>
                     }
 
                     <hr className="my-5 mx-5 border" />
+
+                    <li>
+                        <NavLink to='/'><FaHome />Home</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/menu'><IoMdMenu />Our Menu</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/order/salad'><FaLock />Shop</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/menu'><FaFileContract />Contact</NavLink>
+                    </li>
                 </ul>
 
 
